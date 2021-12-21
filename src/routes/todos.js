@@ -10,9 +10,11 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const {content} = req.body
+	const {content,status, author} = req.body
 	const newTodo = new Todo({
-		content:content
+		content,
+		status,
+		author
 	})
 	await newTodo.save()
   res.json({
@@ -42,9 +44,9 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async(req, res) =>{
 	const {id} = req.params
-	const {content} = req.body
+	const {content, author, status} = req.body
 	console.log(content)
-	const todo = await Todo.findOneAndUpdate({_id:id}, {content:content})
+	const todo = await Todo.findOneAndUpdate({_id:id}, {content, author, status})
 	res.json({
 		todo
 	})
